@@ -76,7 +76,7 @@ namespace UserManagement.API.Models.Repository
         {
             var account = await _context.Accounts!.SingleOrDefaultAsync(x => x.Id == id);
             if (account == null)
-                return new Result<Account>(false, new List<string>() { "User not found" });
+                return new Result<Account>(false, "User not found");
 
             return new Result<Account>(account);
         }
