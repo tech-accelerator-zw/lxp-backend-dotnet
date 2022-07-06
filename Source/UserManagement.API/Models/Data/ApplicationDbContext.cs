@@ -1,4 +1,6 @@
-﻿namespace UserManagement.API.Models.Data
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace UserManagement.API.Models.Data
 {
     public class ApplicationDbContext : DbContext
     {
