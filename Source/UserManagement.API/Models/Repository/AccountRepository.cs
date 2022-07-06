@@ -101,7 +101,7 @@ namespace UserManagement.API.Models.Repository
             _context.Accounts!.Update(account);
             await _context.SaveChangesAsync();
 
-            return new Result<Account>(account, new List<string>() { "Account registration complete!" });
+            return new Result<Account>(account, "Account registration complete!");
         }
 
         public async Task<Result<Account>> LoginAsync(LoginRequest login)
