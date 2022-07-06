@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using UserManagement.API.Enums;
-
-namespace UserManagement.API.Models.Data
+﻿namespace UserManagement.API.Models.Data
 {
     public class ApplicationDbContext : DbContext
     {

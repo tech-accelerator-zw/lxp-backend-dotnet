@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ModelLibrary;
+﻿using ModelLibrary;
 using UserManagement.API.Models.Data;
 
 namespace UserManagement.API.Models.Repository
