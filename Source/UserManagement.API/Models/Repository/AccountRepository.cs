@@ -52,7 +52,7 @@ namespace UserManagement.API.Models.Repository
                     Body = string.Format(_configuration["EmailService:ConfirmAccountBody"], account.FirstName, code)
                 });
 
-                return new Result<Account>(account, new List<string> { "Account created successfully!" });
+                return new Result<Account>(account, "Account created successfully!");
             }
             catch (Exception ex)
             {
