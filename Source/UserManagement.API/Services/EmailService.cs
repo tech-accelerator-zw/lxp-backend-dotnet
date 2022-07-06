@@ -39,8 +39,7 @@ namespace UserManagement.API.Services
             }
             catch (Exception ex)
             {
-                return Task.FromResult(new Result<string>(false,
-                    new List<string> { ex.ToString() }));
+                return Task.FromResult(new Result<string>(false, ex.ToString()));
             }
         }
     }
