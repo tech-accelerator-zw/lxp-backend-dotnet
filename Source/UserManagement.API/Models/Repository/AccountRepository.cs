@@ -89,7 +89,7 @@ namespace UserManagement.API.Models.Repository
         public async Task<Result<Account>> CompleteSignUpAsync(CompleteSignUpRequest request)
         {
             var account = await _context.Accounts!.Where(x => x.Email == request.Email).FirstOrDefaultAsync();
-            if (account == null) return new Result<Account>(false, new List<string>() { "User account not found!" });
+            if (account == null) return new Result<Account>(false, "User account not found!");
 
             var code = await _context.GeneratedCodes!.Where(x => x.UserEmail == request.Email && x.Code == request.OtpCode).FirstOrDefaultAsync();
             if (code == null) return new Result<Account>(false, new List<string>() { "Invalid OTP code provided!" });
