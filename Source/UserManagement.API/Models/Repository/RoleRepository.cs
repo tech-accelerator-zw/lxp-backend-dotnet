@@ -1,4 +1,5 @@
-﻿using ModelLibrary;
+﻿using Microsoft.EntityFrameworkCore;
+using ModelLibrary;
 using UserManagement.API.Models.Data;
 
 namespace UserManagement.API.Models.Repository
@@ -26,7 +27,7 @@ namespace UserManagement.API.Models.Repository
         public async Task<Result<Role>> GetByIdAsync(int id)
         {
             var role = await _context.Roles!.SingleOrDefaultAsync(x => x.Id == id);
-            if (role == null) return new Result<Role>(false, new List<string> { "Role not found" });
+            if (role == null) return new Result<Role>(false, "Role not found");
 
             return new Result<Role>(role);
         }
