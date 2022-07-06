@@ -30,7 +30,7 @@ namespace UserManagement.API.Models.Repository
             try
             {
                 if (!IsUniqueUser(account.Email!))
-                    return new Result<Account>(false, new List<string> { "An account with that email already exists!" });
+                    return new Result<Account>(false, "An account with that email already exists!");
 
                 await _context.Accounts!.AddAsync(account);
 
