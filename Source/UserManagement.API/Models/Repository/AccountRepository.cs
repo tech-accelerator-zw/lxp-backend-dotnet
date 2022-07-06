@@ -56,8 +56,7 @@ namespace UserManagement.API.Models.Repository
             }
             catch (Exception ex)
             {
-                return new Result<Account>(false,
-                    new List<string> { ex.ToString() });
+                return new Result<Account>(false, ex.ToString());
             }
         }
 
