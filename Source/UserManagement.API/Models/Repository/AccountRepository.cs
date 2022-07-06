@@ -92,7 +92,7 @@ namespace UserManagement.API.Models.Repository
             if (account == null) return new Result<Account>(false, "User account not found!");
 
             var code = await _context.GeneratedCodes!.Where(x => x.UserEmail == request.Email && x.Code == request.OtpCode).FirstOrDefaultAsync();
-            if (code == null) return new Result<Account>(false, new List<string>() { "Invalid OTP code provided!" });
+            if (code == null) return new Result<Account>(false, "Invalid OTP code provided!");
 
             account.UserName = request.UserName;
             account.Status = Status.Verified;
