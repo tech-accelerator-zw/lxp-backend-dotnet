@@ -45,12 +45,12 @@ namespace UserManagement.API.Models.Repository
 
                 await _context.SaveChangesAsync();
 
-                //await _emailService.SendEmailAsync(new EmailRequest
-                //{
-                //    To = account.Email,
-                //    Subject = _configuration["EmailService:ConfirmAccountSubject"],
-                //    Body = string.Format(_configuration["EmailService:ConfirmAccountBody"], account.FirstName, code)
-                //});
+                await _emailService.SendEmailAsync(new EmailRequest
+                {
+                    To = account.Email,
+                    Subject = _configuration["EmailService:ConfirmAccountSubject"],
+                    Body = string.Format(_configuration["EmailService:ConfirmAccountBody"], "", code)
+                });
 
                 return new Result<Account>(account, "Account created successfully!");
             }
