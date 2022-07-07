@@ -21,7 +21,7 @@ namespace UserManagement.API.Controllers
         [ProducesResponseType(typeof(Result<Account>),  StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateAccount([FromBody] AccountRequest request)
         {
-            var result = await _accountRepository.CreateAsync(new Account
+            var result = await _accountRepository.SignUpAsync(new Account
             {
                 Email = request.Email,
                 RoleId = request.RoleId,
