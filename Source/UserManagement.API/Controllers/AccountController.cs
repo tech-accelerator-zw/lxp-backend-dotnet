@@ -23,8 +23,6 @@ namespace UserManagement.API.Controllers
         {
             var result = await _accountRepository.CreateAsync(new Account
             {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
                 Email = request.Email,
                 RoleId = request.RoleId,
                 PhoneNumber = request.PhoneNumber,
