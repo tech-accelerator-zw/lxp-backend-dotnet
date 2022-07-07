@@ -45,12 +45,12 @@ namespace UserManagement.API.Models.Repository
 
                 await _context.SaveChangesAsync();
 
-                await _emailService.SendEmailAsync(new EmailRequest
-                {
-                    To = account.Email,
-                    Subject = _configuration["EmailService:ConfirmAccountSubject"],
-                    Body = string.Format(_configuration["EmailService:ConfirmAccountBody"], account.FirstName, code)
-                });
+                //await _emailService.SendEmailAsync(new EmailRequest
+                //{
+                //    To = account.Email,
+                //    Subject = _configuration["EmailService:ConfirmAccountSubject"],
+                //    Body = string.Format(_configuration["EmailService:ConfirmAccountBody"], account.FirstName, code)
+                //});
 
                 return new Result<Account>(account, "Account created successfully!");
             }
@@ -74,7 +74,7 @@ namespace UserManagement.API.Models.Repository
 
         public async Task<Result<Account>> GetByIdAsync(int id)
         {
-            var account = await _context.Accounts!.SingleOrDefaultAsync(x => x.Id == id);
+            var account = await _context.Accounts!.SingleOrDefaultAsync(x => x.UserId == id);
             if (account == null)
                 return new Result<Account>(false, "User not found");
 
@@ -94,7 +94,7 @@ namespace UserManagement.API.Models.Repository
             var code = await _context.GeneratedCodes!.Where(x => x.UserEmail == request.Email && x.Code == request.OtpCode).FirstOrDefaultAsync();
             if (code == null) return new Result<Account>(false, "Invalid OTP code provided!");
 
-            account.UserName = request.UserName;
+            //account.UserName = request.UserName;
             account.Status = AccountStatus.Verified;
             account.Password = _passwordService.HashPassword(request.Password!);
 
@@ -107,7 +107,7 @@ namespace UserManagement.API.Models.Repository
         public async Task<Result<Account>> LoginAsync(LoginRequest login)
         {
             var account = await _context.Accounts!
-                .Where(x => x.UserName == login.UserName)
+                //.Where(x => x.UserName == login.UserName)
                 .Include(x => x.Role)
                 .FirstOrDefaultAsync();
 
@@ -168,14 +168,14 @@ namespace UserManagement.API.Models.Repository
                 await _context.SaveChangesAsync();
             }
 
-            var emailResult = await _emailService.SendEmailAsync(new EmailRequest
-            {
-                Subject = _configuration["EmailService:ConfirmAccountSubject"],
-                Body = string.Format(_configuration["EmailService:ConfirmAccountBody"], account.FirstName, otpCode.Code),
-                To = email
-            });
+            //var emailResult = await _emailService.SendEmailAsync(new EmailRequest
+            //{
+            //    Subject = _configuration["EmailService:ConfirmAccountSubject"],
+            //    Body = string.Format(_configuration["EmailService:ConfirmAccountBody"], account.FirstName, otpCode.Code),
+            //    To = email
+            //});
 
-            if (!emailResult.Success) return emailResult;
+            //if (!emailResult.Success) return emailResult;
 
             return new Result<string>("OTP code has been sent to your email.");
         }
