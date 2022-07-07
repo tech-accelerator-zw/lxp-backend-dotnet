@@ -25,7 +25,7 @@ namespace UserManagement.API.Models.Repository
             _emailService = emailService;
         }
 
-        public async Task<Result<Account>> CreateAsync(Account account)
+        public async Task<Result<Account>> SignUpAsync(Account account)
         {
             try
             {
