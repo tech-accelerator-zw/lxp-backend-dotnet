@@ -16,18 +16,19 @@ namespace UserManagement.API.Controllers
 
         public AccountController(IAccountRepository accountRepository) => _accountRepository = accountRepository;
 
-        [HttpPost("create-account")]
-        [Authorize(Roles = "Admin")]
+        [HttpPost("sign-up")]
         [ProducesResponseType(typeof(Result<Account>),  StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateAccount([FromBody] AccountRequest request)
         {
             var result = await _accountRepository.SignUpAsync(new Account
             {
                 Email = request.Email,
-                RoleId = request.RoleId,
                 PhoneNumber = request.PhoneNumber,
-                Status =  AccountStatus.Disabled,
-                DateCreated = DateTime.Now
+                Password = request.Password,
+                RoleId = request.RoleId,
+                Status = AccountStatus.Unverified,
+                DateCreated = DateTime.Now,
+                DateModified = DateTime.Now
             });
 
             if (!result.Success) return BadRequest(result);
