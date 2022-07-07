@@ -5,7 +5,7 @@ namespace UserManagement.API.Models.Repository
 {
     public interface IAccountRepository
     {
-        Task<Result<Account>> CreateAsync(Account account);
+        Task<Result<Account>> SignUpAsync(Account account);
         Task<Result<Account>> GetByIdAsync(int id);
         Task<Result<IEnumerable<Account>>> GetAllAsync();
         Task<Result<Account>> UpdateAsync(Account account);
