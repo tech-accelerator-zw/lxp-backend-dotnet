@@ -95,7 +95,7 @@ namespace UserManagement.API.Models.Repository
             if (code == null) return new Result<Account>(false, "Invalid OTP code provided!");
 
             account.UserName = request.UserName;
-            account.Status = Status.Verified;
+            account.Status = AccountStatus.Verified;
             account.Password = _passwordService.HashPassword(request.Password!);
 
             _context.Accounts!.Update(account);
@@ -111,7 +111,7 @@ namespace UserManagement.API.Models.Repository
                 .Include(x => x.Role)
                 .FirstOrDefaultAsync();
 
-            if (account != null && account.Status != Status.Verified) return new Result<Account>(false, "Please complete sign up process for this account!");
+            if (account != null && account.Status != AccountStatus.Verified) return new Result<Account>(false, "Please complete sign up process for this account!");
             
             if (account == null || _passwordService.VerifyHash(login.Password!, account!.Password!) == false)
                 return new Result<Account>(false, "Username or password is incorrect!");
