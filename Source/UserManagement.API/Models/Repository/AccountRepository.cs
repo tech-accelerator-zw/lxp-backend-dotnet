@@ -74,7 +74,7 @@ namespace UserManagement.API.Models.Repository
 
         public async Task<Result<Account>> GetByIdAsync(int id)
         {
-            var account = await _context.Accounts!.SingleOrDefaultAsync(x => x.UserId == id);
+            var account = await _context.Accounts!.SingleOrDefaultAsync(x => x.Id == id);
             if (account == null)
                 return new Result<Account>(false, "User not found");
 
