@@ -1,17 +1,13 @@
 ﻿using UserManagement.API.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System;
 
 namespace UserManagement.API.Models
 {
     public class Account
     {
         [Key]
-        public int Id { get; set; } 
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? UserName { get; set; }
+        public int UserId { get; set; }
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }
         public string? Password { get; set; }
@@ -20,8 +16,8 @@ namespace UserManagement.API.Models
         [ForeignKey("RoleId")]
         public Role? Role { get; set; }
         public DateTime DateCreated { get; set; }
+        public DateTime DateModified { get; set; }
         [NotMapped]
         public string? Token { get; set; }
-
     }
 }
