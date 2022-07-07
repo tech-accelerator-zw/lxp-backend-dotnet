@@ -28,7 +28,7 @@ namespace UserManagement.API.Controllers
                 Email = request.Email,
                 RoleId = request.RoleId,
                 PhoneNumber = request.PhoneNumber,
-                Status =  Status.Disabled,
+                Status =  AccountStatus.Disabled,
                 DateCreated = DateTime.Now
             });
 
