@@ -16,9 +16,6 @@ namespace UserManagement.API.Models.Data
                 {
                     Email = "admin@admin.com",
                     RoleId = 1,
-                    UserName = "admin",
-                    FirstName = "Super",
-                    LastName = "Admin",
                     Password = "$ju!137$V1$10000$Y6WVORfADjluJmwF0/bS0Vv9McwCQdj/h6HYf/omtIqBIchy",
                     Status = AccountStatus.Verified,
                     DateCreated = DateTime.Now,
