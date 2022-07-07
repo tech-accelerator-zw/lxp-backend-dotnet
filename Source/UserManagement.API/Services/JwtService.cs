@@ -23,8 +23,6 @@ namespace UserManagement.API.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim("UserId", account.Id.ToString()),
-                    new Claim("UserName", account.UserName!),
                     new Claim(ClaimTypes.Email, account.Email!),
                     new Claim(ClaimTypes.Role, account.Role!.Name!)
                 }),
