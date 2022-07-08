@@ -140,6 +140,7 @@ namespace UserManagement.API.Models.Repository
                 return new Result<Account>(false, "Old password mismatch");
 
             account.Data.Password = _passwordService.HashPassword(changePassword.NewPassword!);
+            account.Data.DateModified = DateTime.Now;
 
             _context.Accounts!.Update(account.Data);
             await _context.SaveChangesAsync();
