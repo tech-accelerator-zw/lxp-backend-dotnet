@@ -12,5 +12,6 @@ namespace UserManagement.API.Models.Data
         public DbSet<Account>? Accounts { get; set; }
         public DbSet<Role>? Roles { get; set; }
         public DbSet<GeneratedCode>? GeneratedCodes { get; set; }
+        public DbSet<Student>? Students { get; set; }
     }
 }
