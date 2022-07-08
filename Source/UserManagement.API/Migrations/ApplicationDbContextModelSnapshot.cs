@@ -80,6 +80,28 @@ namespace UserManagement.API.Migrations
                     b.ToTable("GeneratedCodes");
                 });
 
+            modelBuilder.Entity("UserManagement.API.Models.Lecturer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Lecturers");
+                });
+
             modelBuilder.Entity("UserManagement.API.Models.Role", b =>
                 {
                     b.Property<int>("Id")
