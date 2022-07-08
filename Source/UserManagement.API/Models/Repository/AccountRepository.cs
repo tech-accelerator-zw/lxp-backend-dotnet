@@ -168,16 +168,16 @@ namespace UserManagement.API.Models.Repository
                 await _context.SaveChangesAsync();
             }
 
-            //var emailResult = await _emailService.SendEmailAsync(new EmailRequest
-            //{
-            //    Subject = _configuration["EmailService:ConfirmAccountSubject"],
-            //    Body = string.Format(_configuration["EmailService:ConfirmAccountBody"], account.FirstName, otpCode.Code),
-            //    To = email
-            //});
+            var emailResult = await _emailService.SendEmailAsync(new EmailRequest
+            {
+                Subject = _configuration["EmailService:ConfirmAccountSubject"],
+                Body = string.Format(_configuration["EmailService:ConfirmAccountBody"], "", otpCode.Code),
+                To = email
+            });
 
-            //if (!emailResult.Success) return emailResult;
+            if (!emailResult.Success) return emailResult;
 
-            return new Result<string>("OTP code has been sent to your email.");
+            return new Result<string>("OTP has been sent to your email.");
         }
 
         public async Task<Result<string>> GetResetPasswordCodeAsync(string email)
