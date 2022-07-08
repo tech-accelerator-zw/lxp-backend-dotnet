@@ -59,15 +59,6 @@ namespace UserManagement.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("complete-sign-up")]
-        public async Task<IActionResult> ConfirmAccount(CompleteSignUpRequest request)
-        {
-            var result = await _accountRepository.CompleteSignUpAsync(request);
-            if (!result.Success) return BadRequest(result);
-
-            return Ok(result);
-        }
-
         [HttpPost("change-password")]
         [Authorize]
         [ProducesResponseType(typeof(Result<Account>), StatusCodes.Status200OK)]
