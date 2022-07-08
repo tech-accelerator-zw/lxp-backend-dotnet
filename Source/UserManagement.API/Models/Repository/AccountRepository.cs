@@ -220,6 +220,7 @@ namespace UserManagement.API.Models.Repository
             if (verifyCode == null) return new Result<Account>(false, "Invalid password reset code provided.");
 
             account!.Password = _passwordService.HashPassword(resetPassword.NewPassword!);
+            account.DateModified = DateTime.Now;
 
             _context.Update(account);
             await _context.SaveChangesAsync();
