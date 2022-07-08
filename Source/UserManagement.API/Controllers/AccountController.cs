@@ -36,9 +36,6 @@ namespace UserManagement.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll() => Ok(await _accountRepository.GetAllAsync());
-
         [HttpGet("sign-up/resend-otp/{email}")]
         [ProducesResponseType(typeof(Result<string>), StatusCodes.Status200OK)]
         public async Task<IActionResult> ResendOtp(string email)
