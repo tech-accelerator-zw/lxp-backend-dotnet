@@ -103,7 +103,7 @@ namespace UserManagement.API.Migrations
                     b.Property<string>("RegisteredName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -216,7 +216,9 @@ namespace UserManagement.API.Migrations
                 {
                     b.HasOne("UserManagement.API.Models.Account", "Account")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Account");
                 });
