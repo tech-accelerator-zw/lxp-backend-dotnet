@@ -5,6 +5,7 @@ namespace UserManagement.API.Models
     public class Institute
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public string? RegisteredName { get; set; }
         public string? LogoUrl { get; set; }
         public bool IsActive { get; set; } = true;
