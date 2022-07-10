@@ -16,29 +16,25 @@ namespace UserManagement.API.Controllers
 
         public AccountController(IAccountRepository accountRepository) => _accountRepository = accountRepository;
 
-        [HttpPost("create-account")]
-        [Authorize(Roles = "Admin")]
+        [HttpPost("sign-up")]
         [ProducesResponseType(typeof(Result<Account>),  StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateAccount([FromBody] AccountRequest request)
         {
-            var result = await _accountRepository.CreateAsync(new Account
+            var result = await _accountRepository.SignUpAsync(new Account
             {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
                 Email = request.Email,
-                RoleId = request.RoleId,
                 PhoneNumber = request.PhoneNumber,
-                Status =  Status.Disabled,
-                DateCreated = DateTime.Now
+                Password = request.Password,
+                RoleId = request.RoleId,
+                Status = AccountStatus.Unverified,
+                DateCreated = DateTime.Now,
+                DateModified = DateTime.Now
             });
 
             if (!result.Success) return BadRequest(result);
 
             return Ok(result);
         }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAll() => Ok(await _accountRepository.GetAllAsync());
 
         [HttpGet("sign-up/resend-otp/{email}")]
         [ProducesResponseType(typeof(Result<string>), StatusCodes.Status200OK)]
@@ -60,15 +56,6 @@ namespace UserManagement.API.Controllers
             if (!result.Success)
                 return StatusCode(StatusCodes.Status403Forbidden, result);
             
-            return Ok(result);
-        }
-
-        [HttpPost("complete-sign-up")]
-        public async Task<IActionResult> ConfirmAccount(CompleteSignUpRequest request)
-        {
-            var result = await _accountRepository.CompleteSignUpAsync(request);
-            if (!result.Success) return BadRequest(result);
-
             return Ok(result);
         }
 

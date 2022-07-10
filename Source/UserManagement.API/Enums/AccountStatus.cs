@@ -1,6 +1,6 @@
 ﻿namespace UserManagement.API.Enums
 {
-    public enum Status
+    public enum AccountStatus
     {
         Verified = 1,
         Unverified,

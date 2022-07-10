@@ -25,13 +25,14 @@ namespace UserManagement.API.Models.Repository
             _emailService = emailService;
         }
 
-        public async Task<Result<Account>> CreateAsync(Account account)
+        public async Task<Result<Account>> SignUpAsync(Account account)
         {
             try
             {
                 if (!IsUniqueUser(account.Email!))
                     return new Result<Account>(false, "An account with that email already exists!");
 
+                account.Password = _passwordService.HashPassword(account.Password!);
                 await _context.Accounts!.AddAsync(account);
 
                 var code = await _codeGeneratorService.GenerateVerificationCode();
@@ -49,7 +50,7 @@ namespace UserManagement.API.Models.Repository
                 {
                     To = account.Email,
                     Subject = _configuration["EmailService:ConfirmAccountSubject"],
-                    Body = string.Format(_configuration["EmailService:ConfirmAccountBody"], account.FirstName, code)
+                    Body = string.Format(_configuration["EmailService:ConfirmAccountBody"], "", code)
                 });
 
                 return new Result<Account>(account, "Account created successfully!");
@@ -94,8 +95,8 @@ namespace UserManagement.API.Models.Repository
             var code = await _context.GeneratedCodes!.Where(x => x.UserEmail == request.Email && x.Code == request.OtpCode).FirstOrDefaultAsync();
             if (code == null) return new Result<Account>(false, "Invalid OTP code provided!");
 
-            account.UserName = request.UserName;
-            account.Status = Status.Verified;
+            //account.UserName = request.UserName;
+            account.Status = AccountStatus.Verified;
             account.Password = _passwordService.HashPassword(request.Password!);
 
             _context.Accounts!.Update(account);
@@ -107,11 +108,11 @@ namespace UserManagement.API.Models.Repository
         public async Task<Result<Account>> LoginAsync(LoginRequest login)
         {
             var account = await _context.Accounts!
-                .Where(x => x.UserName == login.UserName)
+                .Where(x => x.Email == login.Email)
                 .Include(x => x.Role)
                 .FirstOrDefaultAsync();
 
-            if (account != null && account.Status != Status.Verified) return new Result<Account>(false, "Please complete sign up process for this account!");
+            if (account != null && account.Status != AccountStatus.Verified) return new Result<Account>(false, "Please complete sign up process for this account!");
             
             if (account == null || _passwordService.VerifyHash(login.Password!, account!.Password!) == false)
                 return new Result<Account>(false, "Username or password is incorrect!");
@@ -139,6 +140,7 @@ namespace UserManagement.API.Models.Repository
                 return new Result<Account>(false, "Old password mismatch");
 
             account.Data.Password = _passwordService.HashPassword(changePassword.NewPassword!);
+            account.Data.DateModified = DateTime.Now;
 
             _context.Accounts!.Update(account.Data);
             await _context.SaveChangesAsync();
@@ -171,13 +173,13 @@ namespace UserManagement.API.Models.Repository
             var emailResult = await _emailService.SendEmailAsync(new EmailRequest
             {
                 Subject = _configuration["EmailService:ConfirmAccountSubject"],
-                Body = string.Format(_configuration["EmailService:ConfirmAccountBody"], account.FirstName, otpCode.Code),
+                Body = string.Format(_configuration["EmailService:ConfirmAccountBody"], "", otpCode.Code),
                 To = email
             });
 
             if (!emailResult.Success) return emailResult;
 
-            return new Result<string>("OTP code has been sent to your email.");
+            return new Result<string>("OTP has been sent to your email.");
         }
 
         public async Task<Result<string>> GetResetPasswordCodeAsync(string email)
@@ -219,6 +221,7 @@ namespace UserManagement.API.Models.Repository
             if (verifyCode == null) return new Result<Account>(false, "Invalid password reset code provided.");
 
             account!.Password = _passwordService.HashPassword(resetPassword.NewPassword!);
+            account.DateModified = DateTime.Now;
 
             _context.Update(account);
             await _context.SaveChangesAsync();
