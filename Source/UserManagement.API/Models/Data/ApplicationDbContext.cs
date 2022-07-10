@@ -14,5 +14,6 @@ namespace UserManagement.API.Models.Data
         public DbSet<GeneratedCode>? GeneratedCodes { get; set; }
         public DbSet<Student>? Students { get; set; }
         public DbSet<Lecturer>? Lecturers { get; set; }
+        public DbSet<Institute>? Institutes { get; set; }
     }
 }
